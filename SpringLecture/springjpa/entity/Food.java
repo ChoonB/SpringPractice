@@ -18,12 +18,12 @@ public class Food {
     @Column(nullable = false)
     private String foodName;
     @Column(nullable = false)
-    private String price;
+    private int price;
 
     @OneToMany(mappedBy = "food", fetch = FetchType.EAGER)
     private List<Orders> orders = new ArrayList<>();
 
-    public Food(String foodName, String price) {
+    public Food(String foodName, int price) {
         this.foodName = foodName;
         this.price = price;
     }
