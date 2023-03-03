@@ -11,3 +11,5 @@ IoC_DI에는 Java와 Spring으로 각각 IoC와 DI를 실습한 자료가 있습
 hanghaememo에는 스프링 입문 마지막 강의의 메모장 실습 자료가 있습니다.
 <br>
 test_member에는 230302에 진행한 스프링 입문 퀴즈 회원 생성 API 자료가 있습니다.
+<br>
+myselectshopbeta에는 230303부터 진행한 스프링 심화 상품등록 API 자료가 있습니다.
