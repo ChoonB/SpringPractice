@@ -12,4 +12,6 @@ hanghaememo에는 스프링 입문 마지막 강의의 메모장 실습 자료�
 <br>
 test_member에는 230302에 진행한 스프링 입문 퀴즈 회원 생성 API 자료가 있습니다.
 <br>
-myselectshopbeta에는 230303부터 진행한 스프링 심화 상품등록 API 자료가 있습니다.
+myselectshopbeta에는 230303에 진행한 스프링 심화 상품등록 API 자료(AllInOne Cotroller)가 있습니다.
+<br>
+myselectshop에는 230303에 진행한 스프링 심화 상품등록 API 자료 (리팩토링 + 스케쥴러)가 있습니다.
