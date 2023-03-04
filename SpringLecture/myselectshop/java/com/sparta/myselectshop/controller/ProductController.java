@@ -3,8 +3,10 @@ package com.sparta.myselectshop.controller;
 import com.sparta.myselectshop.dto.ProductMypriceRequestDto;
 import com.sparta.myselectshop.dto.ProductRequestDto;
 import com.sparta.myselectshop.dto.ProductResponseDto;
+import com.sparta.myselectshop.entity.Product;
 import com.sparta.myselectshop.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,12 +26,17 @@ public class ProductController {
         return productService.createProduct(requestDto, request);
     }
 
-
     // 관심 상품 조회하기
     @GetMapping("/products")
-    public List<ProductResponseDto> getProducts(HttpServletRequest request) {
-        // 응답 보내기
-        return productService.getProducts(request);
+    public Page<Product> getProducts(
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam("sortBy") String sortBy,
+            @RequestParam("isAsc") boolean isAsc,
+            HttpServletRequest request
+    ) {
+        // 응답 보내기 1페이지가 0번 인덱스이니 page -1을 파라미터로 넣는다(컨트롤러에서만 한번 빼주면 됨)
+        return productService.getProducts(request, page-1, size, sortBy, isAsc);
     }
 
     // 관심 상품 최저가 등록하기
@@ -37,6 +44,17 @@ public class ProductController {
     public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto requestDto, HttpServletRequest request) {
         // 응답 보내기 (업데이트된 상품 id)
         return productService.updateProduct(id, requestDto, request);
+    }
+
+    // 상품에 폴더 추가
+    @PostMapping("/products/{productId}/folder")
+    public Long addFolder(
+            @PathVariable Long productId,
+            @RequestParam Long folderId,
+            HttpServletRequest request
+    ) {
+        Product product = productService.addFolder(productId, folderId, request);
+        return product.getId();
     }
 
 }
