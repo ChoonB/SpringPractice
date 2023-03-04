@@ -15,3 +15,5 @@ test_member에는 230302에 진행한 스프링 입문 퀴즈 회원 생성 API 
 myselectshopbeta에는 230303에 진행한 스프링 심화 상품등록 API 자료(AllInOne Cotroller)가 있습니다.
 <br>
 myselectshop에는 230303에 진행한 스프링 심화 상품등록 API 자료 (리팩토링 + 스케쥴러)가 있습니다.
+<br>
+myselectshop에 추가적으로 회원가입 + 로그인 + JWT + 폴더 기능 추가했습니다. 
