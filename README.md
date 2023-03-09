@@ -1,5 +1,5 @@
-Spring 연습 저장소입니다.
-<br>
+# Spring 연습 저장소
+
 SpringLecture 폴더는 스프링 강의 실습자료입니다.
 <br>
 springjpa는 jpa연관관계와 Entity Repository를 이해하는 실습자료입니다.
@@ -17,3 +17,5 @@ myselectshopbeta에는 230303에 진행한 스프링 심화 상품등록 API 자
 myselectshop에는 230303에 진행한 스프링 심화 상품등록 API 자료 (리팩토링 + 스케쥴러)가 있습니다.
 <br>
 myselectshop에 추가적으로 회원가입 + 로그인 + JWT + 폴더 기능 추가했습니다. 
+<br>
+Quiz에는 230309에 진행한 스프링 심화 퀴즈 BookStore 주문에 대한 Entity 자료가 있습니다.
