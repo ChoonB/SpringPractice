@@ -1,29 +1,41 @@
 package com.sparta.springsecurity.config;
 
 
+import com.sparta.springsecurity.security.CustomAccessDeniedHandler;
+import com.sparta.springsecurity.security.CustomAuthenticationEntryPoint;
+import com.sparta.springsecurity.security.CustomSecurityFilter;
+import com.sparta.springsecurity.security.UserDetailsServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@RequiredArgsConstructor
 @EnableWebSecurity // 스프링 Security 지원을 가능하게 함
+@EnableGlobalMethodSecurity(securedEnabled = true) // @Secured 어노테이션 활성화
 public class WebSecurityConfig {
 
-    // 아래의 SecurityFilterChain보다 더 우선적으로 걸리는 설정
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final UserDetailsServiceImpl userDetailsService;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         // h2-console 사용 및 resources 접근 허용 설정
-        /*
-            Security는 모든 요청을 다 인증하기 때문에 CSS나 JS image 파일같은건 일일이 인증하지 않게 하려고
-            web.ignoring() 쓰면 이러한 경로로 들어오는 것은 인증처리하는걸 무시한다고 설정
-            아래 메서드처럼 .permitAll로 하나하나 설정하는 방법도 있고 이렇게 한방에 할 수도 있다.
-         */
-
         return (web) -> web.ignoring()
                 .requestMatchers(PathRequest.toH2Console())
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
@@ -33,18 +45,24 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // CSRF 설정
         http.csrf().disable();
-        // .permitAll()로 저기 url들은 인증 안하고 실행 되게 한다.
-        http.authorizeRequests()
-//                .antMatchers(HttpMethod.GET, "/api/user").hasAnyRole(ADMIN)// 이렇게 api 지정하거나
-//                .antMatchers("/h2-console/**").permitAll()
-//                .antMatchers("/css/**").permitAll()
-//                .antMatchers("/js/**").permitAll()
-//                .antMatchers("/images/**").permitAll()
-//                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .anyRequest().authenticated();  //  이 외의 URL요청들은 다 인증을 하겠다.
+
+        http.authorizeRequests().antMatchers("/api/user/**").permitAll()
+                .anyRequest().authenticated();
 
         // Custom 로그인 페이지 사용
         http.formLogin().loginPage("/api/user/login-page").permitAll();
+
+        // Custom Filter 등록하기
+        http.addFilterBefore(new CustomSecurityFilter(userDetailsService, passwordEncoder()), UsernamePasswordAuthenticationFilter.class);
+
+        // 접근 제한 페이지 이동 설정
+        // http.exceptionHandling().accessDeniedPage("/api/user/forbidden");
+
+        // 401 Error 처리, Authorization 즉, 인증과정에서 실패할 시 처리
+        http.exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint);
+
+        // 403 Error 처리, 인증과는 별개로 추가적인 권한이 충족되지 않는 경우
+        http.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler);
 
         return http.build();
     }
