@@ -23,3 +23,5 @@ Quiz에는 230309에 진행한 스프링 숙련 퀴즈 BookStore 주문에 대�
 springsecurity에는 230310에 진행한 스프링 심화 Spring Security에 대한 자료가 있습니다.
 <br>
 230311 myselectshop를 Spring Security에 JWT 적용하고 OAuth 기능 추가로 구현했습니다.
+<br>
+SpringLecture/myselectshop/test/entity/ProductTest.java 에 Test 작성법 예시가 있습니다.
