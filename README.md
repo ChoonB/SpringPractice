@@ -24,4 +24,6 @@ springsecurity에는 230310에 진행한 스프링 심화 Spring Security에 대
 <br>
 230311 myselectshop를 Spring Security에 JWT 적용하고 OAuth 기능 추가로 구현했습니다.
 <br>
+230312 myselectshop에 API 사용시간을 측정하는 AOP를 적용했습니다.
+<br>
 [myselectshop/test](https://github.com/ChoonB/SpringPractice/tree/master/SpringLecture/myselectshop/test)  경로에 Test 작성법 예시가 있습니다.
