@@ -26,4 +26,6 @@ springsecurity에는 230310에 진행한 스프링 심화 Spring Security에 대
 <br>
 230312 myselectshop에 API 사용시간을 측정하는 AOP를 적용했습니다.
 <br>
+230313 myselectshop에 예외처리 ExceptionHandler 기능 추가했습니다.
+<br>
 [myselectshop/test](https://github.com/ChoonB/SpringPractice/tree/master/SpringLecture/myselectshop/test)  경로에 Test 작성법 예시가 있습니다.
