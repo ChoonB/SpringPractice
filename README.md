@@ -20,6 +20,8 @@ myselectshop에 추가적으로 회원가입 + 로그인 + JWT + 폴더 기능 �
 <br>
 Quiz에는 230309에 진행한 스프링 숙련 퀴즈 BookStore 주문에 대한 Entity 자료가 있습니다.
 <br>
+Quiz2에는 230316에 진행한 스프링 심화 퀴즈 자료가 있습니다.
+<br>
 springsecurity에는 230310에 진행한 스프링 심화 Spring Security에 대한 자료가 있습니다.
 <br>
 230311 myselectshop를 Spring Security에 JWT 적용하고 OAuth 기능 추가로 구현했습니다.
