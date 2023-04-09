@@ -33,3 +33,5 @@ springsecurity에는 230310에 진행한 스프링 심화 Spring Security에 대
 [myselectshop/test](https://github.com/ChoonB/SpringPractice/tree/master/SpringLecture/myselectshop/test)  경로에 Test 작성법 예시가 있습니다.
 <br>
 filetest는 파일 업로드 기능을 테스트 해보았습니다.
+<br>
+redistest에서는 Redis의 능숙한 활용을 위해 따로 연습하는 프로젝트입니다. 230407~
