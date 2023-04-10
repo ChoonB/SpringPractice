@@ -5,6 +5,8 @@ import com.example.redistest.entity.Reservation;
 import com.example.redistest.entity.TicketInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -13,6 +15,7 @@ public class ReservationService {
   private final ReservationRepository reservationRepository;
   private final TicketInfoRepository ticketInfoRepository;
 
+  @Transactional(isolation = Isolation.READ_COMMITTED)
   public Long makeReservation(ReservationRequestDto dto) {
     TicketInfo ticketInfo = ticketInfoRepository.findById(dto.getTicketInfoId()).orElseThrow(
         () -> new IllegalArgumentException("공연정보가 없습니다.")
