@@ -1,11 +1,16 @@
 package com.example.redistest.csr;
 
+import com.example.redistest.dto.MessageResponseDto;
 import com.example.redistest.dto.ReservationRequestDto;
 import com.example.redistest.entity.Reservation;
 import com.example.redistest.entity.TicketInfo;
+import com.example.redistest.excption.CustomException;
+import com.example.redistest.excption.ExceptionType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -14,29 +19,45 @@ public class ReservationService {
 
   private final ReservationRepository reservationRepository;
   private final TicketInfoRepository ticketInfoRepository;
+  private final RedisRepository redisRepository;
 
-  @Transactional(isolation = Isolation.READ_COMMITTED)
+//   예매하기
+  @Transactional
   public Long makeReservation(ReservationRequestDto dto) {
-    TicketInfo ticketInfo = ticketInfoRepository.findById(dto.getTicketInfoId()).orElseThrow(
-        () -> new IllegalArgumentException("공연정보가 없습니다.")
-    );
+    checkAndMinusLeftSeatByRedis(dto);
+    Reservation reservation = new Reservation(dto);
+    reservationRepository.saveAndFlush(reservation);
+    return reservation.getId();
+  }
 
-    if (!ticketInfo.isAvailable()) {
-      throw new IllegalArgumentException("현재 예매가 불가능한 공연입니다.");
-    }
-    if (0 <= ticketInfo.getLeftSeats() - dto.getCount()) {
-      int getLeftSeats = ticketInfo.reserveSeats(dto.getCount());
+//// 좌석 수 변경
+//  @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
+//  public TicketInfo checkAndMinusLeftSeat(ReservationRequestDto dto) {
+//    TicketInfo ticketInfo = ticketInfoRepository.findById(dto.getTicketInfoId())
+//        .orElseThrow(() -> new CustomException(ExceptionType.NOT_FOUND_TICKET_INFO_EXCEPTION));
+//    if (!ticketInfo.isAvailable()) {
+//      throw new CustomException(ExceptionType.RESERVATION_UNAVAILABLE_EXCEPTION);
+//    }
+//    if (0 > ticketInfo.getLeftSeats() - dto.getCount()) {
+//      throw new CustomException(ExceptionType.OUT_OF_TICKET_EXCEPTION);
+//    }
+//    ticketInfo.minusSeats(dto.getCount());
+//    return ticketInfoRepository.save(ticketInfo);
+//  }
 
-      // 만약 ReservedSeats와 TotalSeats가 같아지면 isAvailable을 false로 변경
-      if (getLeftSeats == 0) {
-        ticketInfo.setAvailable(false);
-      }
-      ticketInfoRepository.save(ticketInfo);
-      Reservation reservation = new Reservation(dto, dto.getUserId(), ticketInfo);
-      reservationRepository.saveAndFlush(reservation);
-      return reservation.getId();
-    }
-    throw new IllegalArgumentException("남은 자리가 없습니다");
+//  redis로 좌석 수 변경
+  @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
+  public void checkAndMinusLeftSeatByRedis(ReservationRequestDto dto) {
+    int leftSeats = redisRepository.findByTicketInfoIdFromRedis(dto.getTicketInfoId());
+    if (leftSeats - dto.getCount()<0) throw new CustomException(ExceptionType.OUT_OF_TICKET_EXCEPTION);
+    redisRepository.changeByTicketInfoIdFromRedis(dto.getTicketInfoId(), dto.getCount());
+  }
 
+//  티켓인포 미리 저장
+  public MessageResponseDto saveTicketInfoToRedis(Long ticketInfoId) {
+    TicketInfo ticketInfo = ticketInfoRepository.findById(ticketInfoId)
+        .orElseThrow(() -> new CustomException(ExceptionType.NOT_FOUND_TICKET_INFO_EXCEPTION));
+    redisRepository.saveTicketInfoToRedis(ticketInfo);
+    return new MessageResponseDto(HttpStatus.OK, "redis에 성공적으로 저장되었습니다.");
   }
 }

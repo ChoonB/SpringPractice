@@ -1,3 +1,7 @@
 INSERT INTO users VALUES (1, 'test1');
 INSERT INTO users VALUES (2, 'test2');
 INSERT INTO users VALUES (3, 'test3');
+
+INSERT INTO ticket_info VALUES (1, TRUE, 300, '2023-04-01T18:00:00', 300);
+INSERT INTO ticket_info VALUES (2, TRUE, 100, '2023-04-01T18:00:00', 300);
+INSERT INTO ticket_info VALUES (3, TRUE, 3, '2023-04-01T18:00:00', 300);

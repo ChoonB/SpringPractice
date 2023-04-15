@@ -19,7 +19,7 @@ public class TicketInfo {
   private Long id;
 
   @Column(nullable = false)
-  private boolean isAvailable = false;
+  private boolean isAvailable;
 
   @Column(nullable = false)
   private int totalSeats;
@@ -30,12 +30,16 @@ public class TicketInfo {
   @Column(nullable = false)
   private LocalDateTime openDate;
 
-  public int reserveSeats(int count) {
-    return this.leftSeats -= count;
+  public void plusSeats(int count){
+    this.leftSeats += count;
   }
 
   public void setAvailable(boolean available) {
     isAvailable = available;
+  }
+
+  public int minusSeats(int count) {
+    return this.leftSeats -= count;
   }
 
   public TicketInfo(TicketInfoRequestDto ticketInfoRequestDto) {
