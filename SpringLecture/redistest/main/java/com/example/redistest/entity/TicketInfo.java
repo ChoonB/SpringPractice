@@ -38,8 +38,12 @@ public class TicketInfo {
     isAvailable = available;
   }
 
-  public int minusSeats(int count) {
-    return this.leftSeats -= count;
+  public void minusSeats(int count) {
+    this.leftSeats -= count;
+  }
+
+  public void setLeftSeats(int leftSeats) {
+    this.leftSeats = leftSeats;
   }
 
   public TicketInfo(TicketInfoRequestDto ticketInfoRequestDto) {

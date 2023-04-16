@@ -60,4 +60,9 @@ public class ReservationService {
     redisRepository.saveTicketInfoToRedis(ticketInfo);
     return new MessageResponseDto(HttpStatus.OK, "redis에 성공적으로 저장되었습니다.");
   }
+
+//  주기적으로 ticketInfo에 반영
+  private void updateLeftSeatsToEntity() {
+
+  }
 }
