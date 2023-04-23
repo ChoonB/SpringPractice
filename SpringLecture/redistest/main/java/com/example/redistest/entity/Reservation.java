@@ -24,7 +24,7 @@ public class Reservation {
   private int count;
 
   private Long userId;
-//
+
 //  @ManyToOne
 //  @JoinColumn(name = "ticket_info_id", nullable = false)
 //  private TicketInfo ticketInfo;
