@@ -1,0 +1,48 @@
+﻿이름,포지션,분담,Contact
+🔰 장진혁,BackEnd,"- 데이터 조회 Redis Cache 구현 
+- 공연 추가 기능 구현
+- CI/CD (GitHub Actions)환경 구축
+- DevOps (AWS EC2, RDS, ALB) 환경 구축
+- Pinpoint 모니터링 구축
+- 전반적인 BackEnd 코드 리팩토링
+- Junit5와 Mockito를 이용한 테스트 코드 작성
+- JMeter를 활용한 부하 테스트 수행
+- 인증, 인가 문제 개선","mailto:jangjh45@naver.com
+
+https://github.com/jangjh45
+
+https://jjinhyeok.tistory.com/"
+김건율,BackEnd,"- Event & Reservation BackEnd 코드 작성
+- JWT, Exception, Security BackEnd 코드 작성
+- 예매하기 서비스 로직을 Redis Cache로 구현
+- Caffeine으로 유저 정보 Local Cache로 구현
+- 전반적인 BackEnd 코드 리팩토링 
+- Junit5와 Mockito를 이용한 테스트 코드 작성
+- @Scheduled로 캐시 자동화 구현
+- AOP로 응답속도 측정 구현
+- 관리자 페이지 BackEnd & FrontEnd 코드 구현","mailto:shgkdc@gmail.com
+
+https://github.com/ChoonB
+
+https://velog.io/@choonbok22"
+서성혁,"BackEnd, FrontEnd","-  예매완료 FrontEnd 작업
+- 회원, 예매 BackEnd 코드 작성
+- Grafana 모니터링
+- Junit5와 Mockito를 이용한 테스트 코드 작성
+- 전반적인 BackEnd 코드 리팩토링","mailto:dltngurxodud@naver.com
+
+https://github.com/dltngurxodud"
+이유진,"BackEnd, FrontEnd","- Reservation 예매 취소 로직 작성 
+- 전반적인 BackEnd 코드 리팩토링 
+- 비관적 락을 이용한 트래픽 부하 대응 
+- Docker를 활용한 Infra 구축
+- Grafana를 이용한 모니터링 시스템 구축
+- QueryDSL을 활용한 검색 기능 구현 
+- 전체 FrontEnd 작업
+- 반응형 웹 디자인 설계 및 구현
+- Junit5와 Mockito를 이용한 테스트 코드 작성
+- JMeter를 활용한 전반적인 부하 테스트 수행","mailto:lyjyellow@gmail.com
+
+https://github.com/Yujin-17
+
+https://velog.io/@yujin-17"
